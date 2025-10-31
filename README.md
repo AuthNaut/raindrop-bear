@@ -51,6 +51,64 @@ A tiny helper with one cuddly purpose: **sync your Raindrop.io collections and b
 
 ## Setup (just once!)
 
+### Option 1: OAuth Login (Recommended)
+
+1. **Set up your own OAuth service** (for privacy and security):
+   - See [OAuth/VERCEL_SETUP.md](./OAuth/VERCEL_SETUP.md) for complete setup instructions
+   - Deploy the OAuth service to Vercel
+   - Get your Vercel deployment URL (e.g., `https://your-project.vercel.app`)
+
+2. **Update Chrome Extension with your OAuth URL**:
+   
+   After deploying your OAuth service, update these files in the extension:
+   
+   **a. Update `manifest.json`:**
+   ```json
+   {
+     "externally_connectable": {
+       "matches": [
+         "https://your-project.vercel.app/*",
+         "http://localhost:3030/*"
+       ]
+     }
+   }
+   ```
+   Replace `your-project.vercel.app` with your actual Vercel deployment URL.
+   
+   **b. Update `src/popup.js`** (around line 105):
+   ```javascript
+   // Find this line:
+   const oauthUrl = `https://ohauth.vercel.app/oauth/raindrop?state=${encodedState}`;
+   
+   // Replace with:
+   const oauthUrl = `https://your-project.vercel.app/api/oauth/raindrop?state=${encodedState}`;
+   ```
+   
+   **c. Update `src/options.js`** (around line 163):
+   ```javascript
+   // Find this line:
+   const oauthUrl = `https://ohauth.vercel.app/oauth/raindrop?state=${encodedState}`;
+   
+   // Replace with:
+   const oauthUrl = `https://your-project.vercel.app/api/oauth/raindrop?state=${encodedState}`;
+   ```
+   
+   **d. Update `src/modules/raindrop.js`** (around line 23):
+   ```javascript
+   // Find this line:
+   const OAUTH_REFRESH_URL = 'https://ohauth.vercel.app/oauth/raindrop/refresh';
+   
+   // Replace with:
+   const OAUTH_REFRESH_URL = 'https://your-project.vercel.app/api/oauth/raindrop/refresh';
+   ```
+
+3. **Reload the extension**:
+   - Go to `chrome://extensions/`
+   - Click the reload icon on "Raindrop Bear"
+   - Open the extension popup and click "Login with Raindrop"
+
+### Option 2: Test API Token
+
 1. Open the extension Options
 2. Paste your Raindrop API token
 

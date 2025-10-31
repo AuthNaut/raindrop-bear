@@ -1,0 +1,33 @@
+{
+  "functions": {
+    "api/oauth/raindrop.js": {
+      "maxDuration": 10
+    },
+    "api/oauth/raindrop/callback.js": {
+      "maxDuration": 10
+    },
+    "api/oauth/raindrop/refresh.js": {
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/oauth/raindrop/refresh",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        }
+      ]
+    }
+  ]
+}
+
